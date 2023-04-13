@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/fitnes
+    username: postgres
+    password: 103406709
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username: dianashnarevich12@mail.ru
+    password: pr4ybKY5EuygAQwMNv6J
+    default-encoding: UTF-8
+    test-connection: true
+    protocol: smtps
+jwt:
+  secret: NDQ1ZjAzNjQtMzViZi00MDRjLTljZjQtNjNjYWIyZTU5ZDYw
+  issuer: ITAcademy
+
