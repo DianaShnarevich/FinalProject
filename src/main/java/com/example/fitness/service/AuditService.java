@@ -1,46 +1,41 @@
 package com.example.fitness.service;
 
-import com.example.fitness.core.dto.PageDTO;
 import com.example.fitness.core.dto.audit.AuditDTO;
-import com.example.fitness.core.exceptions.NotFoundException;
 import com.example.fitness.dao.IAuditDao;
 import com.example.fitness.entity.AuditEntity;
 import com.example.fitness.service.api.IAuditService;
-import org.springframework.core.convert.ConversionService;
+import com.example.fitness.util.converters.audit.AuditDTOToAuditEntity;
+import com.example.fitness.util.converters.audit.AuditEntityToAuditDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
-import java.util.Objects;
-
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class AuditService implements IAuditService {
     private final IAuditDao dao;
-    private final ConversionService conversionService;
+    private final AuditEntityToAuditDTO converterToDTO;
+    private final AuditDTOToAuditEntity converterToEntity;
+    private final ObjectMapper objectMapper;
 
-    public AuditService(IAuditDao dao, ConversionService conversionService) {
+    public AuditService(IAuditDao dao, AuditEntityToAuditDTO converterToDTO, AuditDTOToAuditEntity converterToEntity, ObjectMapper objectMapper) {
         this.dao = dao;
-        this.conversionService = conversionService;
+        this.converterToDTO = converterToDTO;
+        this.converterToEntity = converterToEntity;
+        this.objectMapper = new ObjectMapper();
+
     }
 
     @Override
-    public void create(AuditDTO auditDTO) {
-        dao.save(Objects.requireNonNull(conversionService.convert(auditDTO, AuditEntity.class)));
+    public Page<AuditEntity> getPage(Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return dao.findAll(pageRequest);
     }
-
-    @Override
-    public PageDTO get(int page, int size) {
-        PageRequest paging = PageRequest.of(page, size);
-        Page<AuditEntity> all = dao.findAll(paging);
-        List<AuditDTO> auditDTOS = all.getContent().stream()
-                .map(s -> conversionService.convert(s, AuditDTO.class))
-                .collect(Collectors.toList());
-        return new PageDTO<>(page, size, all.getTotalPages(), all.getTotalElements(), all.isFirst(), all.getNumberOfElements(), all.isLast(), auditDTOS);    }
 
     @Override
     public AuditDTO get(UUID uuid) {
-        AuditEntity auditEntity = this.dao.findById(uuid).orElseThrow(() -> new NotFoundException("Пользователя не существует"));
-        return conversionService.convert(auditEntity, AuditDTO.class);    }
+        return converterToDTO.convert(dao.findById(uuid)
+                .orElseThrow(() -> new RuntimeException("not found")));
+    }
+
 }

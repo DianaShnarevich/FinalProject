@@ -1,6 +1,7 @@
 package com.example.fitness.util.converters.audit;
 
 import com.example.fitness.core.dto.audit.AuditDTO;
+import com.example.fitness.core.dto.users.UserDTO;
 import com.example.fitness.entity.AuditEntity;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -9,16 +10,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuditDTOToAuditEntity implements Converter<AuditDTO, AuditEntity> {
     @Override
-    public AuditEntity convert(AuditDTO auditDTO) {
-        return new AuditEntity(
-                auditDTO.getDtCreate(),
-                auditDTO.getUser().getUuid(),
-                auditDTO.getUser().getMail(),
-                auditDTO.getUser().getFio(),
-                auditDTO.getUser().getUserRole(),
-                auditDTO.getText(),
-                auditDTO.getType(),
-                auditDTO.getUuidService());
+    public AuditEntity convert(AuditDTO source) {
+        AuditEntity entity = new AuditEntity();
+        entity.setUuid(source.getUuid());
+        entity.setDtCreate(source.getDtCreate());
+        UserDTO user = source.getUser();
+        entity.setUserUuid(user.getUuid());
+        entity.setFio(user.getFio());
+        entity.setMail(user.getMail());
+        entity.setRole(user.getUserRole());
+        entity.setText(source.getText());
+        entity.setId(source.getId());
+        entity.setType(source.getType());
+        return entity;
     }
 
 }

@@ -5,8 +5,6 @@ import com.example.fitness.core.dto.users.UserDTO;
 import com.example.fitness.core.enums.EntityType;
 import com.example.fitness.util.serializers.LocalDateTimeToMillisCustomSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,38 +20,68 @@ public class AuditDTO {
     private UUID uuid;
     @JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
     private LocalDateTime dtCreate;
-    @NotNull
     private UserDTO user;
-    @NotBlank
     private String text;
-
     private EntityType type;
-    @NotBlank
-    private String uuidService;
+    private String id;
+
     public AuditDTO() {
     }
 
-    public AuditDTO(LocalDateTime dtCreate, UserDTO user, String text, EntityType type, String uuidService) {
-        this.dtCreate = dtCreate;
-        this.user = user;
-        this.text = text;
-        this.type = type;
-        this.uuidService = uuidService;
-    }
-
-    public AuditDTO(UUID uuid, LocalDateTime dtCreate, UserDTO user, String text, EntityType type, String uuidService) {
+    public AuditDTO(UUID uuid, LocalDateTime dtCreate, UserDTO user, String text, EntityType type, String id) {
         this.uuid = uuid;
         this.dtCreate = dtCreate;
         this.user = user;
         this.text = text;
         this.type = type;
-        this.uuidService = uuidService;
+        this.id = id;
     }
 
-    public AuditDTO(UserDTO user, String text, EntityType type, String uuidService) {
+    public UUID getUuid() {
+        return uuid;
     }
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
-    public AuditDTO(UUID uuid, LocalDateTime dtCreate, UserDTO user, String text, jakarta.persistence.metamodel.EntityType type, String uuidService) {
+    public LocalDateTime getDtCreate() {
+        return dtCreate;
+    }
+
+    public void setDtCreate(LocalDateTime dtCreate) {
+        this.dtCreate = dtCreate;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public EntityType getType() {
+        return type;
+    }
+
+    public void setType(EntityType type) {
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -91,14 +91,13 @@ public class ExceptionGlobalHandler {
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public ResponseEntity<ErrorResponseDTO> handleMissingUrlParams(MissingServletRequestParameterException e){
-		ErrorResponseDTO dto = new ErrorResponseDTO("Не переданы в URL требуемые параметры");
+		ErrorResponseDTO dto = new ErrorResponseDTO("В URL не переданы требуемые параметры");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
 	}
 
-
-//	@ExceptionHandler
-//	public ResponseEntity<ErrorResponseDTO> handle(Exception e){
-//		ErrorResponseDTO dto = new ErrorResponseDTO("Сервер не смог корректно обработать запрос. Пожалуйста обратитесь к администратору");
-//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(dto);
-//	}
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponseDTO> handle(Exception e){
+		ErrorResponseDTO dto = new ErrorResponseDTO("Сервер не смог корректно обработать запрос. Пожалуйста обратитесь к администратору");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(dto);
+	}
 }

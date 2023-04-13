@@ -10,15 +10,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuditEntityToAuditDTO implements Converter<AuditEntity, AuditDTO> {
     @Override
-    public AuditDTO convert(AuditEntity auditEntity) {
-        return new AuditDTO(auditEntity.getUuid(),
-                auditEntity.getDtCreate(),
-                new UserDTO(auditEntity.getUuid(),
-                        auditEntity.getMail(),
-                        auditEntity.getFio(),
-                        auditEntity.getUserRole()),
-                auditEntity.getText(),
-                auditEntity.getType(),
-                auditEntity.getUuidService());
+    public AuditDTO convert(AuditEntity source) {
+        AuditDTO auditDTO = new AuditDTO();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUuid(source.getUserUuid());
+        userDTO.setFio(source.getFio());
+        userDTO.setMail(source.getMail());
+        userDTO.setUserRole(source.getRole());
+
+        auditDTO.setUuid(source.getUuid());
+        auditDTO.setDtCreate(source.getDtCreate());
+        auditDTO.setUser(userDTO);
+        auditDTO.setText(source.getText());
+        auditDTO.setType(source.getType());
+        auditDTO.setId(source.getId());
+        return auditDTO;
     }
 }
