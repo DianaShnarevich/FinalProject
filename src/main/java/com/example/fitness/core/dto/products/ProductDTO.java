@@ -19,10 +19,10 @@ public class ProductDTO {
 	private UUID uuid;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtCreate;
+	private LocalDateTime dt_create;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtUpdate;
+	private LocalDateTime dt_update;
 
 	private String title;
 	private Integer weight;
@@ -31,12 +31,12 @@ public class ProductDTO {
 	private BigDecimal fats;
 	private BigDecimal carbohydrates;
 
-	public ProductDTO(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
+	public ProductDTO(UUID uuid, LocalDateTime dt_create, LocalDateTime dt_update,
 	                  String title, Integer weight, Integer calories,
 	                  BigDecimal proteins, BigDecimal fats, BigDecimal carbohydrates) {
 		this.uuid = uuid;
-		this.dtCreate = dtCreate;
-		this.dtUpdate = dtUpdate;
+		this.dt_create = dt_create;
+		this.dt_update = dt_update;
 		this.title = title;
 		this.weight = weight;
 		this.calories = calories;
@@ -47,8 +47,8 @@ public class ProductDTO {
 
 	public ProductDTO(ProductEntity entity){
 		this.uuid = entity.getUuid();
-		this.dtCreate = entity.getDtCreate();
-		this.dtUpdate = entity.getDtUpdate();
+		this.dt_create = entity.getDtCreate();
+		this.dt_update = entity.getDtUpdate();
 		this.title = entity.getTitle();
 		this.weight = entity.getWeight();
 		this.calories = entity.getCalories();

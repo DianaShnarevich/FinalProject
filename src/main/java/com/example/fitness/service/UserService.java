@@ -13,25 +13,25 @@ import java.util.Optional;
 
 public class UserService implements IUserService {
 
-	private final UserDao repository;
+	private final UserDao dao;
 	private final IEmailService mailService;
 	private final PasswordEncoder encoder;
 
 	public UserService(UserDao repository, IEmailService mailService, PasswordEncoder encoder){
-		this.repository = repository;
+		this.dao = repository;
 		this.mailService = mailService;
 		this.encoder = encoder;
 	}
 
 	@Override
 	public void register(UserEntity entity) {
-		if(repository.findByMail(entity.getMail()).isPresent()){
+		if(dao.findByMail(entity.getMail()).isPresent()){
 			throw new IllegalStateException("Пользователь с такие mail уже существует");
 		}
 		String password = entity.getPassword();
 		password = encoder.encode(password);
 		entity.setPassword(password);
-		repository.saveAndFlush(entity);
+		dao.saveAndFlush(entity);
 		String message = "Уважаемый " + entity.getFio() + "! " + "Для завершения регистрации используйте секретный код: " +
 				entity.getCode();
 		mailService.sendSimpleMessage(entity.getMail(), "Код активации", message);
@@ -39,7 +39,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public void verify(String code, String mail) {
-		Optional<UserEntity> optionalUserByMail = repository.findByMail(mail);
+		Optional<UserEntity> optionalUserByMail = dao.findByMail(mail);
 
 		if(optionalUserByMail.isEmpty()){
 			throw new NoSuchElementException("Пользователя с таким eMail нет в базе данных");
@@ -63,12 +63,12 @@ public class UserService implements IUserService {
 			}
 		}
 
-		repository.saveAndFlush(user);
+		dao.saveAndFlush(user);
 	}
 
 	@Override
 	public UserEntity login(UserLoginDTO dto) {
-		Optional<UserEntity> optionalUserByMail = repository.findByMail(dto.getMail());
+		Optional<UserEntity> optionalUserByMail = dao.findByMail(dto.getMail());
 		if(optionalUserByMail.isEmpty()){
 			throw new IllegalStateException("Пользователя с таким eMail нет в базе данных");
 		}
@@ -83,7 +83,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserEntity getCard(String mail) {
-		Optional<UserEntity> optionalUserByMail = repository.findByMail(mail);
+		Optional<UserEntity> optionalUserByMail = dao.findByMail(mail);
 		if(optionalUserByMail.isEmpty()){
 			throw new IllegalStateException("Пользователя с таким eMail нет в базе данных");
 		}
@@ -92,7 +92,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserEntity getUserByMail(String mail){
-		Optional<UserEntity> entityOptional = repository.findByMail(mail);
+		Optional<UserEntity> entityOptional = dao.findByMail(mail);
 		if(entityOptional.isEmpty()) {
 			throw new IllegalStateException("Пользователя с таким eMail нет в базе данных");
 		}

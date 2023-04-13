@@ -26,11 +26,11 @@ public class UserEntity implements Serializable {
 
 	@CreatedDate
 	@Column(name = "dt_create")
-	private LocalDateTime dtCreate;
+	private LocalDateTime dt_create;
 
 	@Version
 	@Column(name = "dt_update")
-	private LocalDateTime dtUpdate;
+	private LocalDateTime dt_update;
 
 	@Column(name = "mail", unique = true)
 	private String mail;
@@ -40,7 +40,7 @@ public class UserEntity implements Serializable {
 
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
-	private UserRole userRole;
+	private UserRole role;
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
@@ -57,20 +57,20 @@ public class UserEntity implements Serializable {
 	}
 
 	public UserEntity(UserCreateDTO dto){
-		this.dtCreate = LocalDateTime.now();
+		this.dt_create = LocalDateTime.now();
 		this.mail = dto.getMail();
 		this.fio = dto.getFio();
-		this.userRole = dto.getUserRole();
+		this.role = dto.getUserRole();
 		this.status = dto.getStatus();
 		this.password = dto.getPassword();
 		this.code = VerificationCodeGenerator.generate();
 	}
 
 	public UserEntity(UserRegistrationDTO dto){
-		this.dtCreate = LocalDateTime.now();
+		this.dt_create = LocalDateTime.now();
 		this.mail = dto.getMail();
 		this.fio = dto.getFio();
-		this.userRole = UserRole.USER;
+		this.role = UserRole.USER;
 		this.status = Status.WAITING_ACTIVATION;
 		this.password = dto.getPassword();
 		this.code = VerificationCodeGenerator.generate();
@@ -85,19 +85,19 @@ public class UserEntity implements Serializable {
 	}
 
 	public LocalDateTime getDtCreate() {
-		return dtCreate;
+		return dt_create;
 	}
 
 	public void setDtCreate(LocalDateTime dtCreate) {
-		this.dtCreate = dtCreate;
+		this.dt_create = dtCreate;
 	}
 
 	public LocalDateTime getDtUpdate() {
-		return dtUpdate;
+		return dt_update;
 	}
 
 	public void setDtUpdate(LocalDateTime dtUpdate) {
-		this.dtUpdate = dtUpdate;
+		this.dt_update = dtUpdate;
 	}
 
 	public String getMail() {
@@ -117,11 +117,11 @@ public class UserEntity implements Serializable {
 	}
 
 	public UserRole getRole() {
-		return userRole;
+		return role;
 	}
 
 	public void setRole(UserRole userRole) {
-		this.userRole = userRole;
+		this.role = role;
 	}
 
 	public Status getStatus() {
@@ -154,29 +154,29 @@ public class UserEntity implements Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 		UserEntity that = (UserEntity) o;
 		return Objects.equals(uuid, that.uuid)
-				&& Objects.equals(dtCreate, that.dtCreate)
-				&& Objects.equals(dtUpdate, that.dtUpdate)
+				&& Objects.equals(dt_create, that.dt_create)
+				&& Objects.equals(dt_update, that.dt_update)
 				&& Objects.equals(mail, that.mail)
 				&& Objects.equals(fio, that.fio)
-				&& userRole == that.userRole
+				&& role == that.role
 				&& status == that.status
 				&& Objects.equals(password, that.password);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(uuid, dtCreate, dtUpdate, mail, fio, userRole, status, password);
+		return Objects.hash(uuid, dt_create, dt_update, mail, fio, role, status, password);
 	}
 
 	@Override
 	public String toString() {
 		return "UserEntity{" +
 				"uuid=" + uuid +
-				", dtCreate=" + dtCreate +
-				", dtUpdate=" + dtUpdate +
+				", dtCreate=" + dt_create +
+				", dtUpdate=" + dt_update +
 				", mail='" + mail + '\'' +
 				", fio='" + fio + '\'' +
-				", role=" + userRole +
+				", role=" + role +
 				", status=" + status +
 				", password='" + password + '\'' +
 				'}';

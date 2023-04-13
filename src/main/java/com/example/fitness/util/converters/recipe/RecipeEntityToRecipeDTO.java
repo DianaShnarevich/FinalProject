@@ -39,8 +39,8 @@ public class RecipeEntityToRecipeDTO implements Converter<RecipeEntity, RecipeDT
 		}
 
 		recipeDTO.setUuid(source.getUuid());
-		recipeDTO.setDtCreate(source.getDtCreate());
-		recipeDTO.setDtUpdate(source.getDtUpdate());
+		recipeDTO.setDt_create(source.getDtCreate());
+		recipeDTO.setDt_update(source.getDtUpdate());
 		recipeDTO.setTitle(source.getTitle());
 		recipeDTO.setComposition(ingredients);
 		recipeDTO.setWeight(weight);

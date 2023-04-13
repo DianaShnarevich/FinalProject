@@ -19,10 +19,10 @@ public class RecipeDTO {
 	private UUID uuid;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtCreate;
+	private LocalDateTime dt_create;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtUpdate;
+	private LocalDateTime dt_update;
 
 	private String title;
 	private Set<CompositionDTO> composition;
@@ -32,12 +32,12 @@ public class RecipeDTO {
 	private BigDecimal fats;
 	private BigDecimal carbohydrates;
 
-	public RecipeDTO(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
+	public RecipeDTO(UUID uuid, LocalDateTime dt_create, LocalDateTime dt_update,
 					 String title, Set<CompositionDTO> composition, Integer weight,
 					 Integer calories, BigDecimal proteins, BigDecimal fats, BigDecimal carbohydrates) {
 		this.uuid = uuid;
-		this.dtCreate = dtCreate;
-		this.dtUpdate = dtUpdate;
+		this.dt_create = dt_create;
+		this.dt_update = dt_update;
 		this.title = title;
 		this.composition = composition;
 		this.weight = weight;

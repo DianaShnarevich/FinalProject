@@ -20,34 +20,34 @@ public class UserDTO {
 	private UUID uuid;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtCreate;
+	private LocalDateTime dt_create;
 
 	@JsonSerialize(using = LocalDateTimeToMillisCustomSerializer.class)
-	private LocalDateTime dtUpdate;
+	private LocalDateTime dt_update;
 
 	private String mail;
 	private String fio;
-	private UserRole userRole;
+	private UserRole role;
 	private Status status;
 
-	public UserDTO(UUID uuid, LocalDateTime dtCreate, LocalDateTime dtUpdate,
-                   String mail, String fio, UserRole userRole, Status status) {
+	public UserDTO(UUID uuid, LocalDateTime dt_create, LocalDateTime dt_update,
+                   String mail, String fio, UserRole role, Status status) {
 		this.uuid = uuid;
-		this.dtCreate = dtCreate;
-		this.dtUpdate = dtUpdate;
+		this.dt_create = dt_create;
+		this.dt_update = dt_update;
 		this.mail = mail;
 		this.fio = fio;
-		this.userRole = userRole;
+		this.role = role;
 		this.status = status;
 	}
 
 	public UserDTO(UserEntity entity) {
 		this.uuid = entity.getUuid();
-		this.dtCreate = entity.getDtCreate();
-		this.dtUpdate = entity.getDtUpdate();
+		this.dt_create = entity.getDtCreate();
+		this.dt_update = entity.getDtUpdate();
 		this.mail = entity.getMail();
 		this.fio = entity.getFio();
-		this.userRole = entity.getRole();
+		this.role = entity.getRole();
 		this.status = entity.getStatus();
 	}
 

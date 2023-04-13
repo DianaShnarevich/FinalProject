@@ -16,7 +16,7 @@ public class AuditEntityToAuditDTO implements Converter<AuditEntity, AuditDTO> {
         userDTO.setUuid(source.getUserUuid());
         userDTO.setFio(source.getFio());
         userDTO.setMail(source.getMail());
-        userDTO.setUserRole(source.getRole());
+        userDTO.setRole(source.getRole());
 
         auditDTO.setUuid(source.getUuid());
         auditDTO.setDtCreate(source.getDtCreate());
